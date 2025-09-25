@@ -40,7 +40,8 @@ class HomeViewController: UIViewController {
   }
   
   required init?(coder: NSCoder) {
-    let dts = RateDataSourceImpl(apiKey: AppConfig.apiKey)
+    let dts = RateDataSourceImpl(apiKey: AppConfig.apiKey,
+                                 realmManager: RealmManager())
     viewModel = HomeViewModel(dataSource: dts)
     super.init(coder: coder)
   }

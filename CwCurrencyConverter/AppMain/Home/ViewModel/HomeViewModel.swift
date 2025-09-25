@@ -32,10 +32,10 @@ class HomeViewModel {
     isLoading.send(true)
     defer { isLoading.send(false) }
     do {
-      let result = try await dataSource.getRate()
+      let result = try await dataSource.getExchangeRate()
       self.rates = result
     } catch {
-      let errorM = (error as? LocalizedError)?.errorDescription ?? error.localizedDescription
+      let errorM = (error as? ApiError)?.description
       errorMessage.send(errorM)
     }
   }
