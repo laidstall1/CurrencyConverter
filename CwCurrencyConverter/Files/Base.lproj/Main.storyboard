@@ -20,7 +20,7 @@
                                 <rect key="frame" x="0.0" y="59" width="393" height="793"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="JzE-ea-fM0">
-                                        <rect key="frame" x="0.0" y="0.0" width="393" height="983"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="1033"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="HGx-fN-jnK">
                                                 <rect key="frame" x="0.0" y="0.0" width="393" height="553"/>
@@ -185,10 +185,10 @@
                                                 </userDefinedRuntimeAttributes>
                                             </stackView>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zww-e3-3RS">
-                                                <rect key="frame" x="0.0" y="583" width="393" height="400"/>
+                                                <rect key="frame" x="0.0" y="583" width="393" height="450"/>
                                                 <color key="backgroundColor" systemColor="systemBlueColor"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="400" id="yQL-O2-Th0"/>
+                                                    <constraint firstAttribute="height" constant="450" id="yQL-O2-Th0"/>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

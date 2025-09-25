@@ -40,7 +40,8 @@ class HomeViewController: UIViewController {
   }
   
   required init?(coder: NSCoder) {
-    let dts = RateDataSourceImpl(apiKey: AppConfig.apiKey)
+    let dts = RateDataSourceImpl(apiKey: AppConfig.apiKey,
+                                 realmManager: RealmManager())
     viewModel = HomeViewModel(dataSource: dts)
     super.init(coder: coder)
   }
@@ -102,15 +103,23 @@ class HomeViewController: UIViewController {
   }
   
   private func setupChartView() {
+    let tabView = TabView(data: ["Past 30 days", "Past 90 days"])
+    bottomGraphView.addSubview(tabView)
+    tabView.anchor(top: bottomGraphView.topAnchor, paddingTop: 30)
+    tabView.centerXInSuperview()
     let rates = viewModel.rates?.rates ?? [:]
     let chartView = RatesChartUIView(rates: rates)
     bottomGraphView.addSubview(chartView)
     chartView.anchor(
-      top: bottomGraphView.topAnchor,
+      top: tabView.bottomAnchor,
       left: bottomGraphView.leftAnchor,
       right: bottomGraphView.rightAnchor,
-      paddingTop: 20
+      paddingTop: 20, paddingLeft: 20, paddingRight: 20
     )
+    let bottomBtn = UIButton.createButtonWithUnderlinedText("Get rate alerts straight to your email inbox", textColor: .white)
+    bottomGraphView.addSubview(bottomBtn)
+    bottomBtn.anchor(bottom: bottomGraphView.bottomAnchor, paddingBottom: 40)
+    bottomBtn.centerXInSuperview()
   }
   
   private func setupView() {
@@ -125,6 +134,7 @@ class HomeViewController: UIViewController {
     informationIconBtn.centerY(inView: exchangeRateTimeBtn)
     informationIconBtn.backgroundColor = .link
     [firstRateTF, secondRateTF, firstCurrencyField, secondCurrencyField].forEach { $0?.numbersOnly() }
+    firstCurrencyField.alpha = 0.5
     setupTextFieldPickerView()
     convertButton.disable()
   }
@@ -159,15 +169,10 @@ extension HomeViewController: UIPickerViewDataSource, UIPickerViewDelegate {
 extension HomeViewController {
   @objc
   func donePressed() {
-    if firstCurrencyField.isFirstResponder {
-      firstCurrencyField.text = viewModel.selectedCurrency
-      firstCurrencyField.resignFirstResponder()
-    } else {
-      secondCurrencyField.text = viewModel.selectedCurrency
-      secondRateTF.currency = viewModel.selectedCurrency ?? ""
-      secondRateTF.text = String()
-      convertButton.enable()
-      secondCurrencyField.resignFirstResponder()
-    }
+    secondCurrencyField.text = viewModel.selectedCurrency
+    secondRateTF.currency = viewModel.selectedCurrency ?? ""
+    secondRateTF.text = String()
+    convertButton.enable()
+    secondCurrencyField.resignFirstResponder()
   }
 }

@@ -8,7 +8,7 @@
 import Alamofire
 import Foundation
 
-struct VkSessionHandler {
+struct CwSessionHandler {
    static let sessionManager: Session = {
        let configuration = URLSessionConfiguration.af.default
        configuration.timeoutIntervalForRequest = 30

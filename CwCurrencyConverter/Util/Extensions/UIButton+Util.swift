@@ -8,6 +8,15 @@
 import UIKit
 
 extension UIButton {
+  convenience init(text: String, textColor: UIColor? = nil, bgColor: UIColor? = nil) {
+    self.init(type: .custom)
+    setTitle(text, for: .normal)
+    titleLabel?.text = text
+    titleLabel?.font = .systemFont(ofSize: 14, weight: .medium)
+    setTitleColor(textColor, for: .normal)
+    backgroundColor = bgColor
+  }
+  
   func underline() {
          guard let title = title(for: .normal),
                let font = titleLabel?.font else { return }
@@ -35,4 +44,11 @@ extension UIButton {
          let attributed = NSAttributedString(string: title, attributes: attrs)
          setAttributedTitle(attributed, for: state)
      }
+  
+  static func createButtonWithUnderlinedText(_ text: String, textColor: UIColor) -> UIButton {
+    let button = UIButton(text: text, textColor: textColor, bgColor: nil)
+    button.titleLabel?.underline()
+    button.setHeight(height: 30)
+    return button
+  }
 }
