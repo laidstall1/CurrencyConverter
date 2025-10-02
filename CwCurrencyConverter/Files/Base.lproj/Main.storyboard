@@ -89,7 +89,7 @@
                                                                     <userDefinedRuntimeAttribute type="string" keyPath="currency" value="EUR"/>
                                                                 </userDefinedRuntimeAttributes>
                                                             </textField>
-                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="1" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b6s-3d-HIc" customClass="CurrencyField" customModule="CwCurrencyConverter" customModuleProvider="target">
+                                                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" enabled="NO" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="0" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="b6s-3d-HIc" customClass="CurrencyField" customModule="CwCurrencyConverter" customModuleProvider="target">
                                                                 <rect key="frame" x="0.0" y="70" width="353" height="50"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="50" id="a6X-ZG-NUa"/>
@@ -156,10 +156,10 @@
                                                         <rect key="frame" x="20" y="533" width="353" height="20"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pOb-Ck-lWD" userLabel="Exchange Rate Time Button">
-                                                                <rect key="frame" x="69.333333333333329" y="0.0" width="214.33333333333337" height="20"/>
+                                                                <rect key="frame" x="10" y="-4" width="333" height="28.333333333333329"/>
                                                                 <state key="normal" title="Button"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="Mid-market exchange rate at ">
-                                                                    <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
+                                                                    <fontDescription key="titleFontDescription" type="system" pointSize="12"/>
                                                                     <color key="baseForegroundColor" systemColor="linkColor"/>
                                                                 </buttonConfiguration>
                                                                 <userDefinedRuntimeAttributes>
@@ -169,10 +169,10 @@
                                                         </subviews>
                                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                         <constraints>
+                                                            <constraint firstItem="pOb-Ck-lWD" firstAttribute="leading" secondItem="g5s-Fr-ixp" secondAttribute="leading" constant="10" id="2gk-JB-9K8"/>
                                                             <constraint firstItem="pOb-Ck-lWD" firstAttribute="centerX" secondItem="g5s-Fr-ixp" secondAttribute="centerX" id="3NZ-sL-ahu"/>
-                                                            <constraint firstItem="pOb-Ck-lWD" firstAttribute="top" secondItem="g5s-Fr-ixp" secondAttribute="top" id="fhP-rf-ULZ"/>
                                                             <constraint firstAttribute="height" constant="20" id="s7m-Ef-MBb"/>
-                                                            <constraint firstAttribute="bottom" secondItem="pOb-Ck-lWD" secondAttribute="bottom" id="yqj-1U-9AF"/>
+                                                            <constraint firstItem="pOb-Ck-lWD" firstAttribute="centerY" secondItem="g5s-Fr-ixp" secondAttribute="centerY" id="zKK-4t-9yD"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>

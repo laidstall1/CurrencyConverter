@@ -9,18 +9,23 @@ import XCTest
 @testable import CwCurrencyConverter
 
 class MockNetworkManager: NetworkManaging {
-    var shouldThrowNoNetwork = false
-    var mockResponse: ExchangeRateResponse?
+  var shouldThrowNoNetwork = false
+  var mockResponse: ExchangeRateResponse?
   
-    func fetchRequest<T>(type: T.Type, apiInformation: ApiInformation) async throws -> T where T : Decodable {
-        if shouldThrowNoNetwork {
-            throw ApiError.NoNetwork
-        }
-      let mock = mockResponse ?? ExchangeRateResponse(success: true,
-                                        timestamp: 123,
-                                        base: "EUR",
-                                        date: "2025-09-24",
-                                        rates: ["USD": 1.1])
-        return mock as! T
+  func fetchRequest<T>(
+    type: T.Type,
+    apiInformation: ApiInformation
+  ) async throws -> T where T: Decodable {
+    print("[TRACE] MockNetworkManager.fetchRequest called for \(T.self), shouldThrowNoNetwork=\(shouldThrowNoNetwork)")
+    if shouldThrowNoNetwork {
+      print("[TRACE] MockNetworkManager throwing NoNetwork")
+      throw ApiError.NoNetwork
     }
+    
+    guard let mockResponse = mockResponse as? T else {
+      fatalError("Mock response type mismatch! Expected \(T.self)")
+    }
+    print("[TRACE] MockNetworkManager returning mock response")
+    return mockResponse
+  }
 }

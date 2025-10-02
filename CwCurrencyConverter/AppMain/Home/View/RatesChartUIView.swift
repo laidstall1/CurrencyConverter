@@ -29,12 +29,6 @@ class RatesChartUIView: UIView {
         guard let hostView = hostingController.view else { return }
         hostView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(hostView)
-
-        NSLayoutConstraint.activate([
-            hostView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            hostView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            hostView.topAnchor.constraint(equalTo: topAnchor),
-            hostView.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        hostView.fillSuperview()
     }
 }

@@ -25,12 +25,17 @@ class RateDataSourceImpl: RateDataSourceProtocol {
   }
   
   func getExchangeRate() async throws -> ExchangeRateResponse {
+    print("[TRACE] enter getExchangeRate() on thread: \(Thread.current). dataSource: \(type(of: self))")
+    print("[TRACE] about to call networkManager.fetchRequest()")
     do {
       let response = try await networkManager.fetchRequest(type: ExchangeRateResponse.self, apiInformation: RateEndpoints.getRate(apiKey: apiKey))
+      print("[TRACE] returned from fetchRequest(): \(response)")
+      print("[TRACE] calling persistence.saveRates() type: \(type(of: realmManager))")
       realmManager.saveRates(response)
       return response
     }
     catch(let error as ApiError) {
+      print("[TRACE] caught ApiError: \(error)")
       switch error {
       case .NoNetwork:
         let cachedRates = realmManager.fetchRates()

@@ -17,19 +17,16 @@ extension UIButton {
     backgroundColor = bgColor
   }
   
-  func underline() {
-         guard let title = title(for: .normal),
-               let font = titleLabel?.font else { return }
-         
-         let attributes: [NSAttributedString.Key: Any] = [
-             .underlineStyle: NSUnderlineStyle.single.rawValue,
-             .foregroundColor: titleColor(for: .normal) ?? .systemBlue,
-             .font: font
-         ]
-         
-         let attributed = NSAttributedString(string: title, attributes: attributes)
-         setAttributedTitle(attributed, for: .normal)
-     }
+  func setUnderlinedTitle(_ text: String, color: UIColor = .link) {
+       let attributed = NSAttributedString(
+           string: text,
+           attributes: [
+               .underlineStyle: NSUnderlineStyle.single.rawValue,
+               .foregroundColor: color
+           ]
+       )
+       setAttributedTitle(attributed, for: .normal)
+   }
   
   func setUnderlinedTitle(_ title: String, color: UIColor? = nil, state: UIControl.State = .normal) {
          let font = titleLabel?.font ?? UIFont.systemFont(ofSize: UIFont.buttonFontSize)

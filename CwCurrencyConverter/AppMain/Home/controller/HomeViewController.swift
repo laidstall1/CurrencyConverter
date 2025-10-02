@@ -74,11 +74,22 @@ class HomeViewController: UIViewController {
     let baseCurrency = viewModel.rates?.base
     [firstRateTF, secondRateTF].forEach { $0?.currency = baseCurrency ?? "" }
     [firstCurrencyField, secondCurrencyField].forEach { $0.text = baseCurrency }
+    let readableDateStr = getReadableTime(timestamp: viewModel.rates?.timestamp)
+    let exchangeRateTimeBtnText = exchangeRateTimeBtn.titleLabel?.text
+    exchangeRateTimeBtn.setUnderlinedTitle("\(exchangeRateTimeBtnText ?? "") \(readableDateStr ?? "")")
     setupChartView()
   }
   
   @IBAction func convertAction(_ sender: Any) {
-    secondRateTF.text = String(viewModel.selectedCurrencyRate ?? 0)
+    if firstRateTF.becomeFirstResponder() {
+      firstRateTF.resignFirstResponder()
+    }
+    guard let euroText = firstRateTF.text, !euroText.isEmpty else {
+      presentFieldIsEmptyAlert()
+      return
+    }
+    let result = (viewModel.selectedCurrencyRate ?? 1) * (Double(euroText) ?? 1)
+    secondRateTF.text = String(result)
   }
   
   fileprivate func handleTitleLabelAttribute() {
@@ -88,6 +99,12 @@ class HomeViewController: UIViewController {
       attributed.addAttribute(.foregroundColor, value: UIColor.systemGreen, range: nsRange)
       titleLabel.attributedText = attributed
     }
+  }
+  
+  fileprivate func presentFieldIsEmptyAlert() {
+    let alert = UIAlertController(title: "Error", message: "Currency Field(s) should not be empty", preferredStyle: .alert)
+    alert.addAction(UIAlertAction(title: "Ok", style: .cancel))
+    present(alert, animated: true)
   }
   
   fileprivate func setupTextFieldPickerView() {
@@ -129,14 +146,29 @@ class HomeViewController: UIViewController {
     let informationIconBtn = UIImageView(image: UIImage(systemName: "info.circle.fill")?.withTintColor(.lightGray, renderingMode: .alwaysOriginal))
     informationIconBtn.setDimensions(height: 20, width: 20)
     exchangeRateTimeView.addSubview(informationIconBtn)
-    informationIconBtn.anchor(left: exchangeRateTimeBtn.rightAnchor, paddingLeft: 4)
+    informationIconBtn.anchor(left: exchangeRateTimeBtn.rightAnchor, right: exchangeRateTimeView.rightAnchor, paddingLeft: 4, paddingRight: 10)
     informationIconBtn.cornerRadius = 10
     informationIconBtn.centerY(inView: exchangeRateTimeBtn)
     informationIconBtn.backgroundColor = .link
     [firstRateTF, secondRateTF, firstCurrencyField, secondCurrencyField].forEach { $0?.numbersOnly() }
     firstCurrencyField.alpha = 0.5
     setupTextFieldPickerView()
-    convertButton.disable()
+    firstRateTF.addTarget(self, action: #selector(textDidChange), for: .editingChanged)
+    firstRateTF.becomeFirstResponder()
+    exchangeRateTimeBtn.titleLabel?.adjustsFontSizeToFitWidth = true
+    exchangeRateTimeBtn.titleLabel?.minimumScaleFactor = 0.8
+    exchangeRateTimeBtn.titleLabel?.lineBreakMode = .byClipping
+  }
+  
+  fileprivate func getReadableTime(timestamp: Double?) -> String? {
+    guard let timestamp else { return nil }
+    let formatter = DateFormatter()
+    formatter.dateStyle = .medium
+    formatter.timeStyle = .medium
+    let date = Date(timeIntervalSince1970: timestamp)
+    let dateString = formatter.string(from: date)
+    print(dateString)
+    return dateString
   }
 }
 
@@ -174,5 +206,13 @@ extension HomeViewController {
     secondRateTF.text = String()
     convertButton.enable()
     secondCurrencyField.resignFirstResponder()
+  }
+  
+  @objc
+  func textDidChange(_ sender: UITextField) {
+    guard let text = sender.text, !text.isEmpty else {
+      return
+    }
+    convertButton.enable()
   }
 }
