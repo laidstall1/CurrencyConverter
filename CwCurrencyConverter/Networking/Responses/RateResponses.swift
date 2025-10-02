@@ -9,7 +9,7 @@ import Foundation
 
 struct ExchangeRateResponse : Codable {
   let success : Bool?
-  let timestamp : Int?
+  let timestamp : Double?
   let base : String?
   let date : String?
   let rates : [String: Double]?

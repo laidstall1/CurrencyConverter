@@ -8,14 +8,15 @@ import XCTest
 
 @testable import CwCurrencyConverter
 
-struct MockPersistenceManager: PersistenceManager {
-  func saveRates(_ response: CwCurrencyConverter.ExchangeRateResponse) {
-    
-  }
-  
+final class MockPersistenceManager: PersistenceManager {  
   var stubbedRates: [String: Double] = [:]
   
-  func fetchRates() -> [String : Double] {
-    stubbedRates
+  func saveRates(_ response: ExchangeRateResponse) {
+      print("[TRACE] MockPersistenceManager.saveRates called")
+  }
+
+  func fetchRates() -> [String: Double] {
+      print("[TRACE] MockPersistenceManager.fetchRates called, returning \(stubbedRates)")
+      return stubbedRates
   }
 }
